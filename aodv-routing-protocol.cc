@@ -24,12 +24,15 @@
  * Authors: Elena Buchatskaia <borovkovaes@iitp.ru>
  *          Pavel Boyko <boyko@iitp.ru>
  */
+
+// Define the logging context for the AODV protocol
 #define NS_LOG_APPEND_CONTEXT                                                                      \
     if (m_ipv4)                                                                                    \
     {                                                                                              \
         std::clog << "[node " << m_ipv4->GetObject<Node>()->GetId() << "] ";                       \
     }
 
+// Include necessary headers for AODV protocol functionality
 #include "aodv-routing-protocol.h"
 
 #include "ns3/adhoc-wifi-mac.h"
@@ -49,22 +52,26 @@
 #include <algorithm>
 #include <limits>
 
+// Declare the namespace for ns-3
 namespace ns3
 {
-
+// Define the log component for AODV protocol
 NS_LOG_COMPONENT_DEFINE("AodvRoutingProtocol");
 
 namespace aodv
 {
-NS_OBJECT_ENSURE_REGISTERED(RoutingProtocol);
+// Ensure the RoutingProtocol class is registered with ns-3
+NS_OBJECT_ENSURE_REGISTERED(RoutingProtocol); 
 
 /// UDP Port for AODV control traffic
+// Define the UDP port number used for AODV control traffic
 const uint32_t RoutingProtocol::AODV_PORT = 654;
 
 /**
  * \ingroup aodv
  * \brief Tag used by AODV implementation
  */
+// Tag class used by AODV for deferred route output
 class DeferredRouteOutputTag : public Tag
 {
   public:
@@ -72,6 +79,7 @@ class DeferredRouteOutputTag : public Tag
      * \brief Constructor
      * \param o the output interface
      */
+    // Constructor for the tag, optionally setting an output interface
     DeferredRouteOutputTag(int32_t o = -1)
         : Tag(),
           m_oif(o)
@@ -82,6 +90,7 @@ class DeferredRouteOutputTag : public Tag
      * \brief Get the type ID.
      * \return the object TypeId
      */
+    // Get the type ID for the tag
     static TypeId GetTypeId()
     {
         static TypeId tid = TypeId("ns3::aodv::DeferredRouteOutputTag")
@@ -91,7 +100,8 @@ class DeferredRouteOutputTag : public Tag
         return tid;
     }
 
-    TypeId GetInstanceTypeId() const override
+    // Override functions for tag behavior
+    TypeId GetInstanceTypeId() const override //*
     {
         return GetTypeId();
     }
@@ -114,28 +124,29 @@ class DeferredRouteOutputTag : public Tag
         m_oif = oif;
     }
 
-    uint32_t GetSerializedSize() const override
+    uint32_t GetSerializedSize() const override //*
     {
         return sizeof(int32_t);
     }
 
-    void Serialize(TagBuffer i) const override
+    void Serialize(TagBuffer i) const override //*
     {
         i.WriteU32(m_oif);
     }
 
-    void Deserialize(TagBuffer i) override
+    void Deserialize(TagBuffer i) override //*
     {
         m_oif = i.ReadU32();
     }
 
-    void Print(std::ostream& os) const override
+    void Print(std::ostream& os) const override //*
     {
         os << "DeferredRouteOutputTag: output interface = " << m_oif;
     }
 
   private:
     /// Positive if output device is fixed in RouteOutput
+    // The output interface associated with the tag
     int32_t m_oif;
 };
 
@@ -143,6 +154,23 @@ NS_OBJECT_ENSURE_REGISTERED(DeferredRouteOutputTag);
 
 //-----------------------------------------------------------------------------
 RoutingProtocol::RoutingProtocol()
+/*
+ initializing member variables of the RoutingProtocol class within the AODV routing protocol implementation for NS-3. 
+
+Member Variable Initialization: These lines are setting initial values for various configuration parameters and state variables 
+used by the AODV routing protocol.
+
+Configuration Parameters: Variables like m_rreqRetries, m_ttlStart, and m_netDiameter are used to configure the behavior of the 
+routing protocol, such as the number of retries for route requests, initial time-to-live values, and the estimated network size.
+
+State Variables: Variables such as m_seqNo, m_requestId, and m_rreqCount are used to maintain the current state of the protocol, 
+like sequence numbers for route discovery and the count of route requests made.
+
+Timers and Queues: The code also initializes timers (m_htimer, m_rreqRateLimitTimer, etc.) and queues (m_queue) which are essential
+for the protocol’s operation, handling timing of events and packet queuing during route discovery.
+
+These initializations are crucial for the AODV protocol to function correctly, as they define how it will behave in the network simulation.
+*/
     : m_rreqRetries(2),
       m_ttlStart(1),
       m_ttlIncrement(2),
@@ -184,13 +212,18 @@ RoutingProtocol::RoutingProtocol()
 }
 
 TypeId
+//a static method that defines a unique TypeId for the AODV routing protocol. This is used by the ns-3 network simulator to 
+//identify and instantiate the protocol.
 RoutingProtocol::GetTypeId()
 {
     static TypeId tid =
         TypeId("ns3::aodv::RoutingProtocol")
-            .SetParent<Ipv4RoutingProtocol>()
-            .SetGroupName("Aodv")
-            .AddConstructor<RoutingProtocol>()
+            .SetParent<Ipv4RoutingProtocol>() //indicates that the AODV routing protocol is inheriting from the Ipv4RoutingProtocol class.
+            .SetGroupName("Aodv") //assigns the protocol to a group named “Aodv” for organizational purposes.
+            .AddConstructor<RoutingProtocol>() //adds a constructor to the TypeId, allowing the ns-3 simulator to create instances of the AODV routing protocol.
+            
+            //defining various configurable parameters and their default values for the AODV routing protocol. These attributes can
+            //be adjusted to change the behavior of the protocol during simulations.
             .AddAttribute("HelloInterval",
                           "HELLO messages emission interval.",
                           TimeValue(Seconds(1)),
