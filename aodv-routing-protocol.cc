@@ -25,6 +25,17 @@
  *          Pavel Boyko <boyko@iitp.ru>
  */
 
+/*
+The `aodv-routing-protocol.cc` file is part of the implementation of the Ad-hoc On-Demand Distance Vector (AODV) Protocol in network simulators like NS-2. Here's a brief overview of its functionality:
+
+- Routing Table Management: It contains functions to manage and maintain the routing table, which holds the information necessary to route packets to their destination.
+- Neighbor Management: It includes functions to manage neighbor nodes, which are crucial for the protocol to function in a dynamic ad-hoc network environment.
+- Broadcast ID Management: It manages broadcast IDs to ensure that routing requests are unique and can be properly identified.
+- Packet Transmission: It handles the transmission of routing packets, including route requests and route replies.
+- Packet Reception: It deals with the reception of routing packets and takes appropriate actions based on the protocol's rules.
+
+This file is essential for the AODV protocol as it defines the core operations that allow for efficient routing in mobile ad-hoc networks¹[1]²[2].
+ */
 // Define the logging context for the AODV protocol
 #define NS_LOG_APPEND_CONTEXT                                                                      \
     if (m_ipv4)                                                                                    \
