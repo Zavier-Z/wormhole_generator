@@ -24,6 +24,24 @@
  * Authors: Elena Buchatskaia <borovkovaes@iitp.ru>
  *          Pavel Boyko <boyko@iitp.ru>
  */
+
+/*
+The `aodv-routing-protocol.h` file is typically a header file associated with the implementation of the Ad hoc On-Demand Distance Vector (AODV) 
+routing protocol in network simulation or actual network code. This protocol is used in mobile ad hoc networks (MANETs) and helps in routing data 
+between nodes by creating routes on demand. The header file would declare the classes, functions, and variables used for the AODV routing protocol.
+
+Here's a high-level overview of what you might find in an `aodv-routing-protocol.h` file:
+
+- Protocol Declarations: Definitions of the AODV protocol operations such as route discovery, route maintenance, and data packet forwarding.
+- Data Structures: Declarations of necessary data structures for maintaining routing tables, neighbor lists, and other protocol state information.
+- Function Prototypes: Declarations of functions that implement the AODV protocol logic, such as handling route requests (RREQs), route replies (RREPs), and route errors (RERRs).
+- Constants and Macros: Definitions of constants and macros used by the AODV protocol, like default time-to-live (TTL) values, sequence numbers, and control message sizes.
+
+For actual code examples and implementations, you can refer to repositories on GitHub that match the topic of `aodv-routing-algorithm`¹[1]. 
+There are several public repositories available that provide implementations of AODV in different programming languages and for different simulation environments.
+ */
+
+
 #ifndef AODVROUTINGPROTOCOL_H
 #define AODVROUTINGPROTOCOL_H
 
