@@ -35,7 +35,8 @@ The `aodv-routing-protocol.cc` file is part of the implementation of the Ad-hoc 
 - Packet Reception: It deals with the reception of routing packets and takes appropriate actions based on the protocol's rules.
 
 This file is essential for the AODV protocol as it defines the core operations that allow for efficient routing in mobile ad-hoc networks¹[1]²[2].
- */
+The code in this page creates a simulated network environment for simulating a wormhole attack. Can you please let me know how many nodes are there for this network?
+*/
 // Define the logging context for the AODV protocol
 #define NS_LOG_APPEND_CONTEXT                                                                      \
     if (m_ipv4)                                                                                    \
