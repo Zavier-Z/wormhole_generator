@@ -93,8 +93,7 @@ int main(int argc, char *argv[])
     {
         NodeContainer wormholeNodes(nodes.Get(0), nodes.Get(5));  // Create wormhole between node 1 and 6
         NodeContainer wormholeNodes(nodes.Get(2), nodes.Get(8));
-        NodeContainer wormholeNodes(nodes.Get(4), nodes.Get(7));
-        NodeContainer wormholeNodes(nodes.Get(5), nodes.Get(10));
+        NodeContainer wormholeNodes(nodes.Get(7), nodes.Get(10));
         NodeContainer wormholeNodes(nodes.Get(11), nodes.Get(16));
         NetDeviceContainer mal_devices = wifi.Install(wifiPhy, wifiMac, wormholeNodes);
 
