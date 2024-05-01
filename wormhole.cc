@@ -91,10 +91,10 @@ int main(int argc, char *argv[])
     // Introduce wormhole on the end point
     if (enableWormhole)
     {
-        NodeContainer wormholeNodes(nodes.Get(0), nodes.Get(5));  // Create wormhole between node 1 and 6
-        NodeContainer wormholeNodes(nodes.Get(2), nodes.Get(8));
-        NodeContainer wormholeNodes(nodes.Get(7), nodes.Get(10));
-        NodeContainer wormholeNodes(nodes.Get(11), nodes.Get(16));
+        NodeContainer wormholeNodes1(nodes.Get(0), nodes.Get(5));  // Create wormhole between node 1 and 6
+        NodeContainer wormholeNodes2(nodes.Get(2), nodes.Get(8));
+        NodeContainer wormholeNodes3(nodes.Get(7), nodes.Get(10));
+        NodeContainer wormholeNodes4(nodes.Get(11), nodes.Get(16));
         NetDeviceContainer mal_devices = wifi.Install(wifiPhy, wifiMac, wormholeNodes);
 
         // Assign IP addresses
